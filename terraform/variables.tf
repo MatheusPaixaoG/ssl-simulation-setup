@@ -16,5 +16,5 @@ variable "instance_type" {
 }
 variable "root_domain" {
   description = "The external domain at which the instance will be reachable"
-  default = "robocin-friendlies.cloud"
+  default = "robocin-simulation.cloud"
 }
