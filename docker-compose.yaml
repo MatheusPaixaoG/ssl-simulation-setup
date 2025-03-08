@@ -129,6 +129,7 @@ services:
       - "10302/udp"
     networks:
       - simulator
+      - match
 
   simulator:
     image: g3force/proxy-tcp-udp-mc:0.2.2

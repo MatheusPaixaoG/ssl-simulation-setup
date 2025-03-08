@@ -46,7 +46,10 @@ resource "aws_internet_gateway" "igw" {
 resource "aws_subnet" "subnet_public" {
   vpc_id     = aws_vpc.vpc.id
   cidr_block = var.cidr_subnet
+  availability_zone = data.aws_availability_zones.available.names[0]
 }
+
+data "aws_availability_zones" "available" {}
 
 resource "aws_route_table" "rtb_public" {
   vpc_id = aws_vpc.vpc.id
@@ -116,7 +119,15 @@ resource "aws_instance" "web" {
   tags = {
     Name = "SSL-Simulation"
   }
+
+  ebs_block_device {
+    device_name = "/dev/sda1"
+    volume_type = "gp2"
+    encrypted = false
+    volume_size = 200
+  }
 }
+
 
 output "public_ip" {
   value = aws_eip.lb.public_ip
