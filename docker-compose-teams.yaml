@@ -55,7 +55,7 @@ services:
       - guacamole
 
   team-kiks:
-    image: ghcr.io/kiksworks/ssl-simulation-env:main
+    image: robocupssl/ubuntu-vnc-java:latest
     user: "default"
     restart: unless-stopped
     mem_limit: "${TEAM_LIMIT_MEM}"
@@ -71,12 +71,31 @@ services:
     networks:
       - match
       - guacamole
+  
+  team-traps:
+    image: vitz787b/ai-server:latest
+    user: "default"
+    restart: unless-stopped
+    mem_limit: "${TEAM_LIMIT_MEM}"
+    cpus: "${TEAM_LIMIT_CPU}"
+    environment:
+      SSH_PUBLIC_KEY:
+      VNC_PW:
+    volumes:
+      - team-traps-data:/home/default:rw
+    ports:
+      - "5901/tcp"
+      - "2222/tcp"
+    networks:
+      - match
+      - guacamole
 
 volumes:
   team-tigers-data:
   team-robocin-data:
   team-robodragons-data:
   team-kiks-data:
+  team-traps-data:
 
 networks:
   match:
